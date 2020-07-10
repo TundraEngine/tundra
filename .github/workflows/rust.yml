@@ -20,7 +20,16 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+    - uses: actions-rs/toolchain@v1
+      with:
+        toolchain: stable
+        compnents: rustfmt, clippy
+        override: true
+    - name: Format
+      run: cargo fmt --all -- --check
     - name: Build
       run: cargo build --verbose
     - name: Run tests
       run: cargo test --verbose
+    - name: Clippy
+      run: cargo clippy -- -D warnings
